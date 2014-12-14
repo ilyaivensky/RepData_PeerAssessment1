@@ -7,21 +7,43 @@ output:
 ## Loading and preprocessing the data
 ```{r}
 data <- read.csv("activity.csv")
+```
+Select only complete cases
+```{r}
 cdata <- data[complete.cases(data),]
+```
+## What is mean total number of steps taken per day?
+Create aggregate table
+```{r}
 sbd <- aggregate(cdata$steps, by=list(cdata$date), FUN=sum)
 colnames(sbd) <- c("date","steps")
 ```
-## What is mean total number of steps taken per day?
+... and plot histogram:
 ```{r}
 with(sbd, 
      hist(steps, main=paste('Total number of steps taken each day'), 
           xlab='Steps per day'))
-mean(sbd$steps)
+```
+
+The mean is 
+```{r} 
+mean(sbd$steps) 
+``` 
+and median 
+```{r} 
 median(sbd$steps)
 ```
+
 ## What is the average daily activity pattern?
-
-
+Generate aggregate table:
+```{r}
+sbi <- aggregate(cdata$steps, by=list(cdata$interval), FUN=mean)
+colnames(sbi) <- c("interval", "mean steps")
+```
+... and plot:
+```{r}
+plot(sbi, type="l")
+```
 
 ## Imputing missing values
 
