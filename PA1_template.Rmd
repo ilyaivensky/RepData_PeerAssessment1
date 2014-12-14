@@ -4,16 +4,21 @@ output:
   html_document:
     keep_md: true
 ---
-
-
 ## Loading and preprocessing the data
-
-
-
+```{r}
+data <- read.csv("activity.csv")
+cdata <- data[complete.cases(data),]
+sbd <- aggregate(cdata$steps, by=list(cdata$date), FUN=sum)
+colnames(sbd) <- c("date","steps")
+```
 ## What is mean total number of steps taken per day?
-
-
-
+```{r}
+with(sbd, 
+     hist(steps, main=paste('Total number of steps taken each day'), 
+          xlab='Steps per day'))
+mean(sbd$steps)
+median(sbd$steps)
+```
 ## What is the average daily activity pattern?
 
 
