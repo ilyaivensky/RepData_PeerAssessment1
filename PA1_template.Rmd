@@ -25,7 +25,7 @@ with(sbd,
           xlab='Steps per day'))
 ```
 
-The mean is 
+The mean number of steps taken per day is 
 ```{r} 
 mean(sbd$steps) 
 ``` 
