@@ -45,8 +45,18 @@ colnames(sbi) <- c("interval", "mean steps")
 plot(sbi, type="l")
 ```
 
+The 5-min interval having the maximal number of steps: 
+```{r}
+sbi[which.max(sbi$"mean steps"),]
+```
+
 ## Imputing missing values
 
+The total number of missing values:
+
+```{r}
+nrow(data[!complete.cases(data),])
+```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
