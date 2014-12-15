@@ -58,5 +58,33 @@ The total number of missing values:
 nrow(data[!complete.cases(data),])
 ```
 
+Imputing mean values for each interval:
+
+```{r}
+data$interval <- sapply(data$interval, function(x) as.factor(x))
+comp <- data
+comp[!complete.cases(data$steps), "steps"] <- sapply(data[!complete.cases(data$steps), "interval"], function(x) sbi[x, "mean steps"])
+```
+
+Create aggregate table
+```{r}
+sbdc <- aggregate(comp$steps, by=list(comp$date), FUN=sum)
+colnames(sbdc) <- c("date","steps")
+```
+... and plot histogram:
+```{r}
+with(sbdc, 
+     hist(steps, main=paste('Total number of steps taken each day after imputing missing values'), 
+          xlab='Steps per day'))
+```
+
+The mean number of steps taken per day is 
+```{r} 
+mean(sbdc$steps) 
+``` 
+and median 
+```{r} 
+median(sbdc$steps)
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
